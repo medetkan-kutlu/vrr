@@ -2,6 +2,8 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine.UI;
+using System;
+using TMPro;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
@@ -15,13 +17,42 @@ public class MeshDeformer : MonoBehaviour
     private bool scheduled = false;
     private MeshDeformerJob job;
     private JobHandle handle;
-    public float radius = 1.0f;
-    public float force = 1.0f;
+
+    private float radiusInit = 0.002f;
+    private float forceInit = 0.0003f;
+    public float radius = 0.002f;
+    public float force = 0.0003f;
+    public Button directionButton;
+    public Slider radiusSlider;
+    public Slider forceSlider;
+    float multiplier = 2f;
+    bool isRaise = true;
     RaycastHit hit;
     Vector3 hitPoint;
 
     private void Start()
     {
+        
+        forceInit = force;
+        radiusInit = radius;
+
+        directionButton = GameObject.FindWithTag("DirectionButton").GetComponent<Button>();
+        radiusSlider = GameObject.FindWithTag("RadiusSlider").GetComponent<Slider>();
+        forceSlider = GameObject.FindWithTag("StrengthSlider").GetComponent<Slider>();
+
+        forceSlider.minValue = forceInit / multiplier;
+        forceSlider.maxValue = forceInit * multiplier;
+
+        radiusSlider.minValue = radiusInit / multiplier;
+        radiusSlider.maxValue = radiusInit * multiplier;
+
+        forceSlider.value = forceInit;
+        radiusSlider.value = radiusInit;
+
+        forceSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        radiusSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+        directionButton.onClick.AddListener(delegate { ChangeDirection(); });
+
         mesh = gameObject.GetComponent<MeshFilter>().mesh;
         mesh.MarkDynamic();
 
@@ -33,9 +64,38 @@ public class MeshDeformer : MonoBehaviour
         vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
         normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
     }
+
+    private void ChangeDirection()
+    {
+        if(isRaise)
+        {
+            isRaise = false;
+            force = -force;
+            directionButton.GetComponentInChildren<TMP_Text>().text = "Lower";
+        }
+        else
+        {
+            isRaise = true;
+            force = -force;
+            directionButton.GetComponentInChildren<TMP_Text>().text = "Raise";
+        }
+    }
+
+    private void ValueChangeCheck()
+    {
+        print("Radius: " + radiusSlider.value + " Force: " + forceSlider.value);
+        radius = radiusSlider.value;
+        if(isRaise){
+            force = forceSlider.value;
+        }
+        else{
+            force = -forceSlider.value;
+        }
+    }
+
     void Update()
     {
-  if (Input.GetMouseButton(0)) // Left mouse button
+        if (Input.GetMouseButton(0)) // Left mouse button
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
