@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07782738, g: 0.08090377, b: 0.069175586, a: 1}
+  m_IndirectSpecularColor: {r: 0.07782761, g: 0.08090387, b: 0.06917563, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1032,6 +1032,27 @@ RectTransform:
   m_AnchoredPosition: {x: -0.9213323, y: 1.633}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &223907376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6225361104877953961, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+  m_PrefabInstance: {fileID: 1860284736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &223907381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 223907376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 1
 --- !u!1 &250212127 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7587927589860201037, guid: 2da5b495feeef1a42bdd399b3c498205, type: 3}
@@ -11728,6 +11749,10 @@ PrefabInstance:
       propertyPath: UICanvasGameobject
       value: 
       objectReference: {fileID: 1750775120}
+    - target: {fileID: 3993623396808604359, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: inputActionReference_UISwitcher
+      value: 
+      objectReference: {fileID: 5293373915083013938, guid: c348712bda248c246b8c49b3db54643f, type: 3}
     - target: {fileID: 4279452667756800278, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -11792,10 +11817,25 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8785748056531621591, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: observableSearch
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785748056531621591, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: ObservedComponents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8785748056531621591, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: ObservedComponents.Array.data[1]
+      value: 
+      objectReference: {fileID: 223907381}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6225361104877953961, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 223907381}
   m_SourcePrefab: {fileID: 100100000, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
 --- !u!20 &1860284737 stripped
 Camera:

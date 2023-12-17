@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 7017741002113885720}
   m_Layer: 0
   m_Name: Right Controller
-  m_TagString: Untagged
+  m_TagString: Rayto
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2616,7 +2616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIController: {fileID: 4939641332520267404}
   BaseController: {fileID: 350868182652555208}
-  inputActionReference_UISwitcher: {fileID: -1587175906693757383, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  inputActionReference_UISwitcher: {fileID: 5293373915083013938, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   UICanvasGameobject: {fileID: 0}
 --- !u!1 &7407160544167049182
 GameObject:
@@ -2641,7 +2641,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5006552291924914200
 Transform:
   m_ObjectHideFlags: 0
@@ -3021,6 +3021,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6478186246965948471}
     m_Modifications:
+    - target: {fileID: 656788606210426475, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2358229838650507380, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6698639957168452362, guid: 69edaa7f6d0367845b76420b47e4be35, type: 3}
       propertyPath: m_Name
       value: Avatar1

@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 public class RoomManagerTest : MonoBehaviourPunCallbacks
 {
     private bool isCooldown = false;
     private float cooldownTime = 3.0f; // Cooldown time in seconds
-    private static bool roomCreated = false; // Flag to track room creation
     private bool isSceneBeingLoaded = false;
     [SerializeField] public int labarotoryNumber;
 
@@ -17,14 +17,7 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
         {
             isCooldown = true;
             Debug.Log("Player entered the trigger");
-            if (!roomCreated)
-            {
-                CreateRoomAndLoadLevel();
-            }
-            else
-            {
-                JoinRoomAndLoadLevel();
-            }
+            PhotonNetwork.JoinOrCreateRoom("Labarotory " + labarotoryNumber, new RoomOptions(), TypedLobby.Default);
             StartCoroutine(ResetCooldown());
         }
         
@@ -35,20 +28,6 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(cooldownTime);
         isCooldown = false;
     }
-
-    void CreateRoomAndLoadLevel()
-    {
-        Debug.Log("Creating a new room");
-        PhotonNetwork.CreateRoom("Labarotory " + labarotoryNumber); // Create a new room
-        roomCreated = true; // Set the flag to true
-    }
-
-    void JoinRoomAndLoadLevel()
-    {
-        Debug.Log("Attempting to join a random room");
-        PhotonNetwork.JoinRandomRoom(); // Attempt to join a random room
-    }
-
     public override void OnJoinedRoom()
     {
         if (!isSceneBeingLoaded)
