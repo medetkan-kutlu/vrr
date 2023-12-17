@@ -164,6 +164,7 @@ public class MeshDeformer : MonoBehaviour
         normals.Dispose();
     }
 
+    [PunRPC]
     public void Deform( Vector3 point, float radius, float force )
     {
         job = new MeshDeformerJob

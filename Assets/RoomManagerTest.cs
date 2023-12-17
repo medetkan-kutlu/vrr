@@ -14,8 +14,8 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
     GameObject genericVRPlayerPrefab;
     public Vector3 spawnPosition;
     [SerializeField] public int labarotoryNumber;
-    
-    
+     
+   // Called when the script instance is being loaded
     private void OnTriggerEnter(Collider other)
     {
         if (!isCooldown)
@@ -38,7 +38,8 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
         {
             isSceneBeingLoaded = true;
             Debug.Log("Joined a room, loading level: ");
-            PhotonNetwork.LoadLevel("HospitalScene");
+            if(!PhotonNetwork.IsMasterClient)
+                PhotonNetwork.LoadLevel("HospitalScene");
             // // if(PhotonNetwork.IsMasterClient){
             //     PhotonNetwork.Instantiate(genericVRPlayerPrefab.name, spawnPosition, Quaternion.identity);
             // // }
