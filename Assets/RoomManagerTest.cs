@@ -10,6 +10,12 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
     private float cooldownTime = 3.0f; // Cooldown time in seconds
     private bool isSceneBeingLoaded = false;
     [SerializeField] public int labarotoryNumber;
+    
+    
+    void Start()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
