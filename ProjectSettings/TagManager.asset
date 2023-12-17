@@ -9,6 +9,7 @@ TagManager:
   - StrengthSlider
   - RadiusSlider
   - DirectionButton
+  - Rayto
   layers:
   - Default
   - TransparentFX

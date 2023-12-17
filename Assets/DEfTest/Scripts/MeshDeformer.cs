@@ -4,6 +4,10 @@ using Unity.Jobs;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using UnityEngine.InputSystem;
+using Unity.VisualScripting;
+using UnityEngine.XR.Interaction.Toolkit;
+using ExitGames.Client.Photon.StructWrapping;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
@@ -18,6 +22,8 @@ public class MeshDeformer : MonoBehaviour
     private MeshDeformerJob job;
     private JobHandle handle;
 
+    XRRayInteractor rayInteractor;
+
     private float radiusInit = 0.002f;
     private float forceInit = 0.0003f;
     public float radius = 0.002f;
@@ -30,9 +36,11 @@ public class MeshDeformer : MonoBehaviour
     RaycastHit hit;
     Vector3 hitPoint;
 
+    public InputActionReference deform;
     private void Start()
     {
-        
+        rayInteractor = GameObject.FindWithTag("Rayto").GetComponent<XRRayInteractor>();
+
         forceInit = force;
         radiusInit = radius;
 
@@ -95,21 +103,20 @@ public class MeshDeformer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0)) // Left mouse button
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity)) // Assuming a layer named "Sculptable"
-            {
-                if (hit.collider.gameObject == gameObject)
-                {
-                    Vector3 hitPoint = hit.point;
-                    Deform(hitPoint, radius, force);
-                }
+        rayInteractor.TryGetCurrent3DRaycastHit(out hit);
+        if(rayInteractor.TryGetHitInfo(out Vector3 pos, out Vector3 norm, out int index, out bool validTarget)){
+
+        if(deform.action.IsPressed()){
+            if(hit.collider.gameObject == gameObject){
+                hitPoint = pos;
+                Deform(hitPoint, radius, force);
             }
         }
+
+        }
     }
+
     private void LateUpdate()
     {
         if( !scheduled )

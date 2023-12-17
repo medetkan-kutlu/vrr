@@ -2,6 +2,34 @@
     "name": "XRI Default Input Actions",
     "maps": [
         {
+            "name": "Deform",
+            "id": "127d26eb-462e-4835-a764-46d7fdaf5cbe",
+            "actions": [
+                {
+                    "name": "Deformation",
+                    "type": "Value",
+                    "id": "bb8981dd-cdbe-453e-b8ef-7767c78b6c79",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ed466727-2a9c-404a-8548-8e529ba2ee90",
+                    "path": "<XRController>{RightHand}/primaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Deformation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "XRI Head",
             "id": "09ff3ccc-21b4-4346-a3a2-7c978b5af892",
             "actions": [
@@ -2591,13 +2619,13 @@
             ]
         },
         {
-            "name": "Switch UI",
-            "id": "015ab99b-12b2-4b3a-8808-9c8185bde286",
+            "name": "UI Swtich",
+            "id": "eb3cf297-91a6-42b3-a9a0-d98f60ab9945",
             "actions": [
                 {
-                    "name": "New action",
+                    "name": "NewACtionee",
                     "type": "Button",
-                    "id": "36af4d12-4af9-410f-b52b-889cd361ff09",
+                    "id": "df418b98-a7a6-4607-a496-c97af22ed6ed",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -2607,12 +2635,12 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "7f085f9a-9678-4c7b-9f3a-c163c7a3d66c",
-                    "path": "<XRController>{LeftHand}/primaryButton",
+                    "id": "dfd3af1d-3776-46a7-8612-3a51e78a3262",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "NewACtionee",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
