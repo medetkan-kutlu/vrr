@@ -125,7 +125,8 @@ public class MeshDeformer : MonoBehaviour
         if(deform.action.IsPressed()){
             if(hit.collider.gameObject == gameObject){
                 hitPoint = pos;
-                Deform(hitPoint, radius, force);
+                photonView.RPC("Deform", RpcTarget.All, hitPoint, radius, force);
+                // Deform(hitPoint, radius, force);
             }
         }
 
