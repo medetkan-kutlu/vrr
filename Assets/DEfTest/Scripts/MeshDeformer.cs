@@ -12,7 +12,7 @@ using Photon.Pun;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
-public class MeshDeformer : MonoBehaviour
+public class MeshDeformer : MonoBehaviourPunCallbacks
 {
     private Mesh mesh;
     private MeshCollider meshCollider;
@@ -36,20 +36,22 @@ public class MeshDeformer : MonoBehaviour
     bool isRaise = true;
     RaycastHit hit;
     Vector3 hitPoint;
-    PhotonView photonView;
+    // PhotonView photonView;
 
     public InputActionReference deform;
     private void Start()
     {
-        //wait 10 seconds before starting
-        Invoke("StartDeform", 3f);
+        // wait 10 seconds before starting
+        StartDeform();
+
     }
+
 
     private void StartDeform(){
 
-        photonView = GameObject.FindWithTag("Player").GetComponent<PhotonView>();
+        // photonView = GetComponentInChildren<PhotonView>();
         if(photonView.IsMine){
-        rayInteractor = GameObject.FindWithTag("Rayto").GetComponent<XRRayInteractor>();
+        rayInteractor = GetComponentInChildren<XRRayInteractor>();
         print("ASDASDASD");
 
         forceInit = force;
@@ -72,10 +74,11 @@ public class MeshDeformer : MonoBehaviour
         radiusSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
         directionButton.onClick.AddListener(delegate { ChangeDirection(); });
 
-        mesh = gameObject.GetComponent<MeshFilter>().mesh;
+        var obj = GameObject.FindWithTag("DeformObject");
+        mesh = obj.GetComponent<Mesh>();
         mesh.MarkDynamic();
 
-        meshCollider = gameObject.GetComponent<MeshCollider>();
+        meshCollider = obj.GetComponent<MeshCollider>();
         meshCollider.sharedMesh = null;
         meshCollider.sharedMesh = mesh;
 
@@ -83,7 +86,12 @@ public class MeshDeformer : MonoBehaviour
         vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
         normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
         }
-} 
+}
+    public override void OnJoinedRoom()
+    {
+        if(PhotonNetwork.IsConnectedAndReady)
+        StartDeform();
+    }
 
     private void ChangeDirection()
     {

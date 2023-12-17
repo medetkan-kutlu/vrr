@@ -9370,10 +9370,18 @@ PrefabInstance:
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 54172794}
+    - target: {fileID: 3654978926809076374, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: sceneViewId
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3993623396808604359, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
       propertyPath: UICanvasGameobject
       value: 
       objectReference: {fileID: 1750775120}
+    - target: {fileID: 5360138954167080734, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5440593895976754545, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
       propertyPath: m_InteractionManager
       value: 
@@ -9424,7 +9432,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8785748056531621591, guid: 13b81117f1cf5c54c97cbdca0690004d, type: 3}
       propertyPath: sceneViewId
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
