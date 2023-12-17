@@ -33,20 +33,6 @@ public class LoginManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Connected to Master server- Nickname: " + PhotonNetwork.NickName);
         PhotonNetwork.JoinLobby();
-
-        var foundCanvasObjects = FindObjectsOfType<TextMeshProUGUI>();
-        if (foundCanvasObjects != null)
-        {
-            Debug.Log("TextMeshProUGUI Object lists: " + foundCanvasObjects.Length);
-            foreach (TextMeshProUGUI g in foundCanvasObjects)
-            {
-                if (g.text.Equals("Connect Photon"))
-                {
-                    g.SetText(PhotonNetwork.NickName);
-                }
-
-            }
-        }
     }
 
     public override void OnJoinedLobby()

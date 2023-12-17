@@ -9,14 +9,13 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
     private bool isCooldown = false;
     private float cooldownTime = 3.0f; // Cooldown time in seconds
     private bool isSceneBeingLoaded = false;
+
+    [SerializeField]
+    GameObject genericVRPlayerPrefab;
+    public Vector3 spawnPosition;
     [SerializeField] public int labarotoryNumber;
     
     
-    void Start()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (!isCooldown)
@@ -24,7 +23,6 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
             isCooldown = true;
             Debug.Log("Player entered the trigger");
             PhotonNetwork.JoinOrCreateRoom("Labarotory " + labarotoryNumber, new RoomOptions(), TypedLobby.Default);
-            // StartCoroutine(ResetCooldown());
         }
         
     }
@@ -41,6 +39,9 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
             isSceneBeingLoaded = true;
             Debug.Log("Joined a room, loading level: ");
             PhotonNetwork.LoadLevel("HospitalScene");
+            // // if(PhotonNetwork.IsMasterClient){
+            //     PhotonNetwork.Instantiate(genericVRPlayerPrefab.name, spawnPosition, Quaternion.identity);
+            // // }
         }
     }
 
