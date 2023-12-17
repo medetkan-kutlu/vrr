@@ -42,14 +42,15 @@ public class MeshDeformer : MonoBehaviour
     private void Start()
     {
         //wait 10 seconds before starting
-        Invoke("StartDeform", 5f);
+        Invoke("StartDeform", 3f);
     }
 
     private void StartDeform(){
 
-        photonView = GetComponentInParent<PhotonView>();
+        photonView = GameObject.FindWithTag("Player").GetComponent<PhotonView>();
         if(photonView.IsMine){
         rayInteractor = GameObject.FindWithTag("Rayto").GetComponent<XRRayInteractor>();
+        print("ASDASDASD");
 
         forceInit = force;
         radiusInit = radius;
@@ -115,6 +116,9 @@ public class MeshDeformer : MonoBehaviour
     void Update()
     {
 
+        if(!rayInteractor){
+            return;
+        }
         rayInteractor.TryGetCurrent3DRaycastHit(out hit);
         if(rayInteractor.TryGetHitInfo(out Vector3 pos, out Vector3 norm, out int index, out bool validTarget)){
 
