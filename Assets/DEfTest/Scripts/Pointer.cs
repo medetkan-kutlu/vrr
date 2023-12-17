@@ -30,7 +30,7 @@ public class Pointer: MonoBehaviour
         RaycastHit hit;
         if( Physics.Raycast(ray, out hit, distance) )
         {
-            MeshDeformer deformer = hit.collider.GetComponent<MeshDeformer>();
+            ObjectDeformable deformer = hit.collider.GetComponent<ObjectDeformable>();
             if( deformer )
             {
                 Debug.DrawLine(ray.origin, ray.origin + ray.direction * distance, Color.green);
