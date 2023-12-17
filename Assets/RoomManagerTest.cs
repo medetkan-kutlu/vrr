@@ -7,7 +7,6 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
 {
     private bool isCooldown = false;
     private float cooldownTime = 3.0f; // Cooldown time in seconds
-    public string levelToLoad;
     private static bool roomCreated = false; // Flag to track room creation
     private bool isSceneBeingLoaded = false;
     [SerializeField] public int labarotoryNumber;
@@ -55,7 +54,7 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
         if (!isSceneBeingLoaded)
         {
             isSceneBeingLoaded = true;
-            Debug.Log("Joined a room, loading level: " + levelToLoad);
+            Debug.Log("Joined a room, loading level: ");
             PhotonNetwork.LoadLevel("HospitalScene");
         }
     }
@@ -68,7 +67,7 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
 
     public override void OnCreatedRoom()
     {
-        Debug.Log("Successfully created a room, loading level: " + levelToLoad);
+        Debug.Log("Successfully created a room, loading level: ");
         PhotonNetwork.LoadLevel("HospitalScene"); // Load the level after creating the room
     }
 }

@@ -5,16 +5,16 @@ using Photon.Pun;
 using TMPro;
 public class LoginManager : MonoBehaviourPunCallbacks
 {
+    
     // Start is called before the first frame update
     void Start()
     {
-        ConnectToPhoton();
-       
     }
-    // Update is called once per frame
-    void Update()
+    
+    // Public method to start the connection process
+    public void OnConnectButtonPressed()
     {
-        
+        ConnectToPhoton();
     }
 
     public void ConnectToPhoton()
