@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using Unity.VisualScripting;
 using UnityEngine.XR.Interaction.Toolkit;
 using ExitGames.Client.Photon.StructWrapping;
+using Photon.Pun;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
@@ -35,10 +36,13 @@ public class MeshDeformer : MonoBehaviour
     bool isRaise = true;
     RaycastHit hit;
     Vector3 hitPoint;
+    PhotonView photonView;
 
     public InputActionReference deform;
     private void Start()
     {
+        photonView = GetComponentInParent<PhotonView>();
+        if(photonView.IsMine){
         rayInteractor = GameObject.FindWithTag("Rayto").GetComponent<XRRayInteractor>();
 
         forceInit = force;
@@ -71,6 +75,7 @@ public class MeshDeformer : MonoBehaviour
         // This memory setup assumes the vertex count will not change.
         vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
         normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
+        }
     }
 
     private void ChangeDirection()
