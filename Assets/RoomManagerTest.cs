@@ -18,7 +18,7 @@ public class RoomManagerTest : MonoBehaviourPunCallbacks
             isCooldown = true;
             Debug.Log("Player entered the trigger");
             PhotonNetwork.JoinOrCreateRoom("Labarotory " + labarotoryNumber, new RoomOptions(), TypedLobby.Default);
-            StartCoroutine(ResetCooldown());
+            // StartCoroutine(ResetCooldown());
         }
         
     }

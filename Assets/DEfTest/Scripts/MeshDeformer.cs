@@ -41,6 +41,12 @@ public class MeshDeformer : MonoBehaviour
     public InputActionReference deform;
     private void Start()
     {
+        //wait 10 seconds before starting
+        Invoke("StartDeform", 5f);
+    }
+
+    private void StartDeform(){
+
         photonView = GetComponentInParent<PhotonView>();
         if(photonView.IsMine){
         rayInteractor = GameObject.FindWithTag("Rayto").GetComponent<XRRayInteractor>();
@@ -76,7 +82,7 @@ public class MeshDeformer : MonoBehaviour
         vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
         normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
         }
-    }
+} 
 
     private void ChangeDirection()
     {
