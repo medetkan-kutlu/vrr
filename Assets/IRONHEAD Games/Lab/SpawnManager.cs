@@ -13,7 +13,6 @@ public class SpawnManager :  MonoBehaviourPunCallbacks
         //this means we are connected photon and do some operations like join or leave 
         //now we can instantiate the players. 
         if(PhotonNetwork.IsConnectedAndReady){
-        print("OLUSTURUOLUYORRRRR");
         PhotonNetwork.Instantiate(genericVRPlayerPrefab.name, spawnPosition, Quaternion.identity);
         }
 

@@ -2,20 +2,17 @@ using UnityEngine;
 using Unity.Collections;
 using Unity.Jobs;
 using UnityEngine.UI;
-using System;
 using TMPro;
 using UnityEngine.InputSystem;
-using Unity.VisualScripting;
 using UnityEngine.XR.Interaction.Toolkit;
-using ExitGames.Client.Photon.StructWrapping;
 using Photon.Pun;
 
 [RequireComponent(typeof(MeshFilter))]
 [RequireComponent(typeof(MeshCollider))]
 public class MeshDeformer : MonoBehaviourPunCallbacks
 {
-    private Mesh mesh;
-    private MeshCollider meshCollider;
+    public Mesh mesh;
+    public MeshCollider meshCollider;
 
     private NativeArray<Vector3> vertices;
     private NativeArray<Vector3> normals;
@@ -36,66 +33,61 @@ public class MeshDeformer : MonoBehaviourPunCallbacks
     bool isRaise = true;
     RaycastHit hit;
     Vector3 hitPoint;
+    bool isSet = false;
     // PhotonView photonView;
 
     public InputActionReference deform;
     private void Start()
     {
         // wait 10 seconds before starting
-        StartDeform();
 
     }
 
 
-    private void StartDeform(){
+    private void StartDeform()
+    {
 
         // photonView = GetComponentInChildren<PhotonView>();
-        if(photonView.IsMine){
-        rayInteractor = GetComponentInChildren<XRRayInteractor>();
-        print("ASDASDASD");
+        if (photonView.IsMine)
+        {
+            rayInteractor = GetComponentInChildren<XRRayInteractor>();
 
-        forceInit = force;
-        radiusInit = radius;
+            forceInit = force;
+            radiusInit = radius;
 
-        directionButton = GameObject.FindWithTag("DirectionButton").GetComponent<Button>();
-        radiusSlider = GameObject.FindWithTag("RadiusSlider").GetComponent<Slider>();
-        forceSlider = GameObject.FindWithTag("StrengthSlider").GetComponent<Slider>();
+            directionButton = GameObject.FindWithTag("DirectionButton").GetComponent<Button>();
+            radiusSlider = GameObject.FindWithTag("RadiusSlider").GetComponent<Slider>();
+            forceSlider = GameObject.FindWithTag("StrengthSlider").GetComponent<Slider>();
 
-        forceSlider.minValue = forceInit / multiplier;
-        forceSlider.maxValue = forceInit * multiplier;
+            forceSlider.minValue = forceInit / multiplier;
+            forceSlider.maxValue = forceInit * multiplier;
 
-        radiusSlider.minValue = radiusInit / multiplier;
-        radiusSlider.maxValue = radiusInit * multiplier;
+            radiusSlider.minValue = radiusInit / multiplier;
+            radiusSlider.maxValue = radiusInit * multiplier;
 
-        forceSlider.value = forceInit;
-        radiusSlider.value = radiusInit;
+            forceSlider.value = forceInit;
+            radiusSlider.value = radiusInit;
 
-        forceSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
-        radiusSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
-        directionButton.onClick.AddListener(delegate { ChangeDirection(); });
+            forceSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+            radiusSlider.onValueChanged.AddListener(delegate { ValueChangeCheck(); });
+            directionButton.onClick.AddListener(delegate { ChangeDirection(); });
 
-        var obj = GameObject.FindWithTag("DeformObject");
-        mesh = obj.GetComponent<Mesh>();
-        mesh.MarkDynamic();
+            var obj = GameObject.FindWithTag("DeformObject");
+            mesh = obj.GetComponent<MeshFilter>().mesh;
+            mesh.MarkDynamic();
 
-        meshCollider = obj.GetComponent<MeshCollider>();
-        meshCollider.sharedMesh = null;
-        meshCollider.sharedMesh = mesh;
+            meshCollider = obj.GetComponent<MeshCollider>();
+            meshCollider.sharedMesh = null;
+            meshCollider.sharedMesh = mesh;
 
-        // This memory setup assumes the vertex count will not change.
-        vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
-        normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
+            // This memory setup assumes the vertex count will not change.
+            vertices = new NativeArray<Vector3>(mesh.vertices, Allocator.Persistent);
+            normals = new NativeArray<Vector3>(mesh.normals, Allocator.Persistent);
         }
-}
-    public override void OnJoinedRoom()
-    {
-        if(PhotonNetwork.IsConnectedAndReady)
-        StartDeform();
     }
-
     private void ChangeDirection()
     {
-        if(isRaise)
+        if (isRaise)
         {
             isRaise = false;
             force = -force;
@@ -113,37 +105,48 @@ public class MeshDeformer : MonoBehaviourPunCallbacks
     {
         print("Radius: " + radiusSlider.value + " Force: " + forceSlider.value);
         radius = radiusSlider.value;
-        if(isRaise){
+        if (isRaise)
+        {
             force = forceSlider.value;
         }
-        else{
+        else
+        {
             force = -forceSlider.value;
         }
     }
 
     void Update()
     {
-
-        if(!rayInteractor){
+        if (PhotonNetwork.InRoom && !isSet)
+        {
+            isSet = true;
+            Invoke("StartDeform", 8f);
+        }
+        if (!rayInteractor)
+        {
             return;
         }
         rayInteractor.TryGetCurrent3DRaycastHit(out hit);
-        if(rayInteractor.TryGetHitInfo(out Vector3 pos, out Vector3 norm, out int index, out bool validTarget)){
-
-        if(deform.action.IsPressed()){
-            if(hit.collider.gameObject == gameObject){
-                hitPoint = pos;
-                photonView.RPC("Deform", RpcTarget.All, hitPoint, radius, force);
-                // Deform(hitPoint, radius, force);
+        if(!hit.collider.gameObject)
+            return;
+        if (rayInteractor.TryGetHitInfo(out Vector3 pos, out Vector3 norm, out int index, out bool validTarget))
+        {
+            if (deform.action.IsPressed())
+            {
+                if (hit.collider.gameObject == meshCollider.gameObject)
+                {
+                    hitPoint = pos;
+                    // photonView.RPC("Deform", RpcTarget.All, hitPoint, radius, force);
+                    Deform(hitPoint, radius, force);
+                }
             }
-        }
 
         }
     }
 
     private void LateUpdate()
     {
-        if( !scheduled )
+        if (!scheduled)
         {
             return;
         }
@@ -173,9 +176,10 @@ public class MeshDeformer : MonoBehaviourPunCallbacks
         normals.Dispose();
     }
 
-    [PunRPC]
-    public void Deform( Vector3 point, float radius, float force )
+    // [PunRPC]
+    public void Deform(Vector3 point, float radius, float force)
     {
+        print("DEFORMING");
         job = new MeshDeformerJob
         {
             deltaTime = Time.deltaTime,

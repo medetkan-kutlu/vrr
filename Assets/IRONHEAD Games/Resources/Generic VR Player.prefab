@@ -2507,6 +2507,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 758fa8665c4578742a064ae35e0d4033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  meshCollider: {fileID: 0}
   radius: 0.002
   force: 0.0003
   directionButton: {fileID: 0}
@@ -2633,8 +2635,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7464075546190505626}
-  - {fileID: 1098559264376133229}
   - {fileID: 2236356062576084127}
+  - {fileID: 1098559264376133229}
   m_Father: {fileID: 5006552291924914200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6956164411545413173
